@@ -2,12 +2,12 @@ package com.bkjf.flink_example.kafka;
 
 import java.util.Properties;
 
+import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.streaming.api.CheckpointingMode;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer011;
-import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
 
 public class RideCleansingToKafka {
 	private static final String KAFKA_BROKER = "spark-032131.lanxun.bkjk.cn:9092,spark-032132.lanxun.bkjk.cn:9092,spark-032133.lanxun.bkjk.cn:9092";
@@ -15,7 +15,6 @@ public class RideCleansingToKafka {
 	public static final String GROUP_ID = "flink_test";
 	public static final String TOPIC = "test";
 	
-	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws Exception {
 		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 		env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
