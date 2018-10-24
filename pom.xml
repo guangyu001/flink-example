@@ -20,7 +20,6 @@
 	    <groupId>org.apache.flink</groupId>
 	    <artifactId>flink-connector-kafka-0.11_2.11</artifactId>
 	    <version>1.6.0</version>
-	    <scope>test</scope>
 	</dependency>
   	<!-- https://mvnrepository.com/artifact/org.apache.flink/flink-core -->
 	<dependency>
@@ -40,14 +39,12 @@
 	    <groupId>org.apache.flink</groupId>
 	    <artifactId>flink-streaming-java_2.11</artifactId>
 	    <version>1.6.0</version>
-	    <scope>provided</scope>
 	</dependency>
   	<!-- https://mvnrepository.com/artifact/org.apache.flink/flink-runtime -->
 	<dependency>
 	    <groupId>org.apache.flink</groupId>
 	    <artifactId>flink-runtime_2.11</artifactId>
 	    <version>1.6.0</version>
-	    <scope>test</scope>
 	</dependency>
   
     <dependency>
