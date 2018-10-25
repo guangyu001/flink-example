@@ -13,8 +13,32 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+  
+  <profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<apps.directory>/home/fanglin/jarFile</apps.directory>
+				<resource.dir>env/dev</resource.dir>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<apps.directory>/home/fanglin/jarFile</apps.directory>
+				<resource.dir>env/test</resource.dir>
+			</properties>
+		</profile>
+	</profiles>
 
   <dependencies>
+  	<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+	<dependency>
+	    <groupId>mysql</groupId>
+	    <artifactId>mysql-connector-java</artifactId>
+	    <version>5.1.47</version>
+	</dependency>
+  	
   	<!-- https://mvnrepository.com/artifact/org.apache.flink/flink-connector-kafka-0.11 -->
 	<dependency>
 	    <groupId>org.apache.flink</groupId>
@@ -46,6 +70,13 @@
 	    <artifactId>flink-runtime_2.11</artifactId>
 	    <version>1.6.0</version>
 	</dependency>
+	<!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+	<dependency>
+	    <groupId>com.alibaba</groupId>
+	    <artifactId>fastjson</artifactId>
+	    <version>1.2.50</version>
+	</dependency>
+	
   
     <dependency>
       <groupId>junit</groupId>
@@ -76,7 +107,7 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>com.bkjf.flink_example.kafka.RideCleansingToKafka</mainClass>
+							<mainClass>com.bkjf.flink_example.kafka.FlinkKafkaToMysqlDemo</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

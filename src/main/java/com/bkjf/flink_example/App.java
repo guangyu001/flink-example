@@ -1,6 +1,11 @@
 package com.bkjf.flink_example;
 
-import org.apache.flink.api.java.utils.ParameterTool;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.bkjf.flink_example.kafka.KafkaBinLogEvent;
 
 /**
  * Hello world!
@@ -8,14 +13,45 @@ import org.apache.flink.api.java.utils.ParameterTool;
  */
 public class App {
 	public static void main(String[] args) {
-		ParameterTool parameterTool = ParameterTool.fromArgs(args);
-		
-		if (parameterTool.getNumberOfParameters() < 5) {
-			System.out.println("Missing parameters!\n" +
-					"Usage: Kafka --input-topic <topic> --output-topic <topic> " +
-					"--bootstrap.servers <kafka brokers> " +
-					"--zookeeper.connect <zk quorum> --group.id <some id>");
-			return;
+		String str = "{\"data\":{\"before\":{},\"after\":{\"password\":\"22222222222\",\"cust_id\":\"3\",\"username\":\"1111111\"}},\"dbName\":\"testdb\",\"id\":13,\"operType\":\"INSERT\",\"tableName\":\"test\"}";
+		JSONObject obj = (JSONObject) JSON.parse(str);
+		System.out.println(obj);
+		KafkaBinLogEvent bean = JSONObject.toJavaObject(obj, KafkaBinLogEvent.class);
+		System.out.println(bean.getDbName());
+		System.out.println(bean.getTableName());
+		System.out.println(bean.getOperType());
+		Object[] array = bean.getData().getBefore().keySet().toArray();
+		for (int i = 0; i < array.length; i++) {
+			System.out.println("-------->"+array[i]);
 		}
+		System.out.println(bean.getData().getAfter().keySet().toArray());
+		System.out.println(bean.getData().getBefore());
+		
+		
+		String sqlType = "replace into report.xfl";
+		String sql = getSqlStr(sqlType, bean.getData().getAfter().keySet().toArray());
+		System.out.println(sql);
+	}
+	
+	
+	
+	private static String getSqlStr(String sqlType,Object[] array) {
+		StringBuilder sb = new StringBuilder(sqlType);
+		sb.append("(");
+		StringBuilder csb = new StringBuilder();
+		StringBuilder vsb = new StringBuilder();
+		for (int i = 0; i < array.length; i++) {
+			csb.append(array[i]).append(",");
+			vsb.append("?").append(",");
+		}
+		String csbStr = csb.toString();
+		String vsbStr = vsb.toString();
+		if(!csbStr.endsWith(",") || !vsbStr.endsWith(",")) {
+			return null;
+		}
+		csbStr = csbStr.substring(0,csbStr.length() -1);
+		vsbStr = vsbStr.substring(0,vsbStr.length() -1);
+		sb.append(csbStr).append(") values(").append(vsbStr).append(")");
+		return sb.toString();
 	}
 }
