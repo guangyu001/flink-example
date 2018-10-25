@@ -3,6 +3,7 @@ package com.bkjf.flink_example.mysql;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.flink.api.java.utils.ParameterTool;
@@ -18,23 +19,18 @@ public class MySQLSink extends RichSinkFunction<KafkaBinLogEvent>{
 	@Override
 	public void invoke(KafkaBinLogEvent bean) throws Exception {
 		try {
-			System.out.println("====================>执行到这1");
 			ParameterTool mysqlParameterTool = ParameterTool.fromPropertiesFile(MySQLSink.class.getResourceAsStream("/mysql.properties"));
-			System.out.println("====================>执行到这2"+mysqlParameterTool.get("drivername"));
 			Class.forName(mysqlParameterTool.get("drivername"));
 			connection = DriverManager.getConnection(mysqlParameterTool.get("dburl"), mysqlParameterTool.get("username"), mysqlParameterTool.get("password"));
 			String sql = "";
 			if("INSERT".equals(bean.getOperType()) || "UPDATE".equals(bean.getOperType())) {
 				String sqlType = "replace into report.xfl";
-				Object[] array = bean.getData().getAfter().keySet().toArray();
-				sql = getSqlStr(sqlType,array);
+				sql = getSqlStr(sqlType,bean.getData().getAfter());
 				if(StringUtils.isEmpty(sql)) {
 					return;
 				}
+				System.out.println(sql);
 				preparedStatement = connection.prepareStatement(sql);
-				for (int i = 0; i < array.length; i++) {
-					preparedStatement.setString((i+1), bean.getData().getAfter().get(array[i]));
-				}
 				preparedStatement.executeUpdate();
 			}else if("DELETE".equals(bean.getOperType())) {
 				//TODO
@@ -49,14 +45,15 @@ public class MySQLSink extends RichSinkFunction<KafkaBinLogEvent>{
 		}
 	}
 	
-	private String getSqlStr(String sqlType,Object[] array) {
+	private String getSqlStr(String sqlType,Map<String, String> data) {
 		StringBuilder sb = new StringBuilder(sqlType);
+		Object[] array = data.keySet().toArray();
 		sb.append("(");
 		StringBuilder csb = new StringBuilder();
 		StringBuilder vsb = new StringBuilder();
 		for (int i = 0; i < array.length; i++) {
 			csb.append(array[i]).append(",");
-			vsb.append("?").append(",");
+			vsb.append("'").append(data.get(array[i])).append("',");
 		}
 		String csbStr = csb.toString();
 		String vsbStr = vsb.toString();

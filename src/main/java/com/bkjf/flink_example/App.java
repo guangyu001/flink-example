@@ -29,20 +29,21 @@ public class App {
 		
 		
 		String sqlType = "replace into report.xfl";
-		String sql = getSqlStr(sqlType, bean.getData().getAfter().keySet().toArray());
+		String sql = getSqlStr(sqlType, bean.getData().getAfter());
 		System.out.println(sql);
 	}
 	
 	
 	
-	private static String getSqlStr(String sqlType,Object[] array) {
+	private static String getSqlStr(String sqlType,Map<String, String> data) {
 		StringBuilder sb = new StringBuilder(sqlType);
+		Object[] array = data.keySet().toArray();
 		sb.append("(");
 		StringBuilder csb = new StringBuilder();
 		StringBuilder vsb = new StringBuilder();
 		for (int i = 0; i < array.length; i++) {
 			csb.append(array[i]).append(",");
-			vsb.append("?").append(",");
+			vsb.append("'").append(data.get(array[i])).append("',");
 		}
 		String csbStr = csb.toString();
 		String vsbStr = vsb.toString();
