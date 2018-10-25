@@ -18,7 +18,9 @@ public class MySQLSink extends RichSinkFunction<KafkaBinLogEvent>{
 	@Override
 	public void invoke(KafkaBinLogEvent bean) throws Exception {
 		try {
+			System.out.println("====================>执行到这1");
 			ParameterTool mysqlParameterTool = ParameterTool.fromPropertiesFile(MySQLSink.class.getResourceAsStream("/mysql.properties"));
+			System.out.println("====================>执行到这2"+mysqlParameterTool.get("drivername"));
 			Class.forName(mysqlParameterTool.get("drivername"));
 			connection = DriverManager.getConnection(mysqlParameterTool.get("dburl"), mysqlParameterTool.get("username"), mysqlParameterTool.get("password"));
 			String sql = "";

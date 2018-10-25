@@ -15,6 +15,7 @@ import com.bkjf.flink_example.mysql.MySQLSink;
 
 public class FlinkKafkaToMysqlDemo {
 	public static void main(String[] args) throws Exception {
+		System.out.println("123");
 		ParameterTool parameterTool = ParameterTool.fromPropertiesFile(FlinkKafkaToMysqlDemo.class.getResourceAsStream("/kafka.properties"));
 		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 		//关闭日志
@@ -37,6 +38,7 @@ public class FlinkKafkaToMysqlDemo {
 				return bean;
 			}
 		});
+		dataStream2.print();
 		dataStream2.addSink(new MySQLSink());
 		env.execute("kafka message save to mysql");
 	}
