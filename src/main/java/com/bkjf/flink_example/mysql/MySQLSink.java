@@ -53,7 +53,7 @@ public class MySQLSink extends RichSinkFunction<KafkaBinLogEvent>{
 		StringBuilder vsb = new StringBuilder();
 		for (int i = 0; i < array.length; i++) {
 			csb.append(array[i]).append(",");
-			vsb.append("'").append(data.get(array[i])).append("',");
+			vsb.append("'").append(StringUtils.isEmpty(data.get(array[i])) ? null : data.get(array[i])).append("',");
 		}
 		String csbStr = csb.toString();
 		String vsbStr = vsb.toString();
