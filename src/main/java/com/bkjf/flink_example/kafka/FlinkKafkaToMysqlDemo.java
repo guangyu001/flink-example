@@ -7,19 +7,15 @@ import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.functions.ProcessFunction;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer011;
-import org.apache.flink.util.Collector;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.bkjf.flink_example.mysql.MySQLSink;
 import com.bkjf.flink_example.mysql.MysqlSink;
 
 public class FlinkKafkaToMysqlDemo {
 	@SuppressWarnings("rawtypes")
 	public static void main(String[] args) throws Exception {
-		System.out.println("123");
 		ParameterTool parameterTool = ParameterTool.fromPropertiesFile(FlinkKafkaToMysqlDemo.class.getResourceAsStream("/kafka.properties"));
 		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 		//关闭日志
@@ -42,7 +38,7 @@ public class FlinkKafkaToMysqlDemo {
 				return bean;
 			}
 		});
-		dataStream2.addSink(new MySQLSink());
+		dataStream2.addSink(new MysqlSink());
 		env.execute("kafka message save to mysql");
 	}
 }
