@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.bkjf.flink_example.kafka.KafkaBinLogEvent;
+import com.bkjf.flink_example.bean.KafkaBinLogEvent;
 
 /**
  * Hello world!

@@ -1,9 +1,11 @@
-package com.bkjf.flink_example.kafka;
+package com.bkjf.flink_example.bean;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class KafkaBinLogEvent {
+public class KafkaBinLogEvent implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private long id;
 	private String dbName;
 	private String tableName;
