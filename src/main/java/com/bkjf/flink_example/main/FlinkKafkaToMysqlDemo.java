@@ -35,7 +35,7 @@ public class FlinkKafkaToMysqlDemo {
 		ParameterTool mysqlParameterTool = ParameterTool.fromPropertiesFile(MySQLSink.class.getResourceAsStream(DB_CONFIG_NAME));
 		String str = sysParameterTool.get(IS_KEYBY_TABLE_NAME);
 		if(!StringUtils.isEmpty(str)) {
-			String[] strs = str.split("#");
+			String[] strs = str.split("\\.");
 			if(strs.length == 2) {
 				keyByMap.put(strs[0], strs[1]);
 			}
