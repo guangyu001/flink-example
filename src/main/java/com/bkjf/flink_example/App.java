@@ -1,6 +1,5 @@
 package com.bkjf.flink_example;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
