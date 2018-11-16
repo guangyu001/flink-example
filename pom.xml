@@ -29,6 +29,14 @@
 				<resource.dir>env/test</resource.dir>
 			</properties>
 		</profile>
+		<profile>
+			<id>pro</id>
+			<properties>
+				<apps.directory>/data/apps/</apps.directory>
+				<resource.dir>env/test</resource.dir>
+			</properties>
+		</profile>
+		
 	</profiles>
 
   <dependencies>
@@ -143,7 +151,7 @@
                         <configuration>  
                             <tasks>  
                                 <copy todir="${apps.directory}">  
-                                    <fileset dir="${project.build.directory}">  
+                                    <fileset dir="target/">  
                                         <include name="*.jar" />  
                                     </fileset>  
                                 </copy>  
