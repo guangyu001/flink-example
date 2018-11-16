@@ -32,8 +32,8 @@
 		<profile>
 			<id>pro</id>
 			<properties>
-				<apps.directory>/data/apps/</apps.directory>
-				<resource.dir>env/test</resource.dir>
+				<apps.directory>/data/apps/flink</apps.directory>
+				<resource.dir>env/pro</resource.dir>
 			</properties>
 		</profile>
 		
