@@ -25,7 +25,7 @@
 		<profile>
 			<id>test</id>
 			<properties>
-				<apps.directory>/home/fanglin/jarFile/</apps.directory>
+				<apps.directory>/home/datainfra/project/flimk-example/</apps.directory>
 				<resource.dir>env/test</resource.dir>
 			</properties>
 		</profile>
