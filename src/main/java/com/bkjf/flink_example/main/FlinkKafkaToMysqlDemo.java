@@ -1,11 +1,8 @@
 package com.bkjf.flink_example.main;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -27,12 +24,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bkjf.flink_example.bean.KafkaBinLogEvent;
 import com.bkjf.flink_example.sink.MySQLSink;
+import com.bkjf.flink_example.utils.ConfigUtils;
 
 public class FlinkKafkaToMysqlDemo {
 	private static Logger logger = LoggerFactory.getLogger(FlinkKafkaToMysqlDemo.class);
 	private static Map<String, String> keyByMap = new HashMap<>();
-	private static final String COLUMN_PROCESS = "columnprocess";
-	private static final String COLUMN_MAP = "columnmap";
+	
 	private static final String IS_KEYBY_TABLE_NAME = "isKeyByTableName";
 	private static final String SYSTEM_CONFIG_NAME = "/system.properties";
 	private static final String KAFKA_CONFIG_NAME = "/kafka.properties";
@@ -50,8 +47,8 @@ public class FlinkKafkaToMysqlDemo {
 				keyByMap.put(strs[0], strs[1]);
 			}
 		}
-		Map<String, List<String>> columnProcessConfig = getColumnProcessConfig(sysParameterTool);
-		Map<String, String> columnMapConfig = getColumnMapConfig(sysParameterTool);
+		Map<String, List<String>> columnProcessConfig = ConfigUtils.getColumnProcessConfig(sysParameterTool);
+		Map<String, String> columnMapConfig = ConfigUtils.getColumnMapConfig(sysParameterTool);
 		logger.info("开始执行flink程序,参数如下：");
 		logger.info("keyByMap = "+keyByMap);
 		logger.info("columnProcessConfig = "+columnProcessConfig);
@@ -95,42 +92,5 @@ public class FlinkKafkaToMysqlDemo {
 		env.execute("kafka message save to mysql");
 	}
 	
-	private static Map<String, List<String>> getColumnProcessConfig(ParameterTool sysParameterTool) throws IOException {
-		Map<String, List<String>> configMap = new HashMap<>();
-		Set<String> nameSet = sysParameterTool.getProperties().stringPropertyNames();
-		for(String name : nameSet) {
-			if(!name.startsWith(COLUMN_PROCESS)) {
-				continue;
-			}
-			String csStr = sysParameterTool.get(name);
-			if(StringUtils.isEmpty(csStr)) {
-				continue;
-			}
-			String[] cs = csStr.split(",");
-			List<String> list = new ArrayList<>();
-			for(String c : cs) {
-				list.add(c);
-			}
-			name = name.replace(COLUMN_PROCESS+".", "");
-			configMap.put(name, list);
-		}
-		return configMap;
-	}
 	
-	private static Map<String, String> getColumnMapConfig(ParameterTool sysParameterTool) throws IOException {
-		Map<String, String> configMap = new HashMap<>();
-		Set<String> nameSet = sysParameterTool.getProperties().stringPropertyNames();
-		for(String name : nameSet) {
-			if(!name.startsWith(COLUMN_MAP)) {
-				continue;
-			}
-			String csStr = sysParameterTool.get(name);
-			if(StringUtils.isEmpty(csStr)) {
-				continue;
-			}
-			name = name.replace(COLUMN_MAP+".", "");
-			configMap.put(name, csStr);
-		}
-		return configMap;
-	}
 }
