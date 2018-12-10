@@ -2,6 +2,8 @@ package com.bkjf.flink_example;
 
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bkjf.flink_example.bean.KafkaBinLogEvent;
@@ -12,7 +14,7 @@ import com.bkjf.flink_example.bean.KafkaBinLogEvent;
  */
 public class App {
 	public static void main(String[] args) {
-		String str = "{\"data\":{\"before\":{},\"after\":{\"password\":\"22222222222\",\"cust_id\":\"3\",\"username\":\"1111111\"}},\"dbName\":\"testdb\",\"id\":13,\"operType\":\"INSERT\",\"tableName\":\"test\"}";
+		/*String str = "{\"data\":{\"before\":{},\"after\":{\"password\":\"22222222222\",\"cust_id\":\"3\",\"username\":\"1111111\"}},\"dbName\":\"testdb\",\"id\":13,\"operType\":\"INSERT\",\"tableName\":\"test\"}";
 		JSONObject obj = (JSONObject) JSON.parse(str);
 		System.out.println(obj);
 		KafkaBinLogEvent bean = JSONObject.toJavaObject(obj, KafkaBinLogEvent.class);
@@ -29,7 +31,10 @@ public class App {
 		
 		String sqlType = "replace into report.xfl";
 		String sql = getSqlStr(sqlType, bean.getData().getAfter());
-		System.out.println(sql);
+		System.out.println(sql);*/
+		String str = "15450.0";
+		double all_amt = StringUtils.isEmpty(str) ? 0 : Double.valueOf(str);
+		System.out.println(all_amt);
 	}
 	
 	
