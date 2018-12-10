@@ -76,9 +76,9 @@ public class StreamReportMain{
 				System.out.println(count.longValue());
 				return bean;
 			}
-		}).setParallelism(4);
+		}).setParallelism(1);
 		dataStream2.addSink(new ReportCountSink(columnProcessConfig, columnMapConfig, mysqlParameterTool)).setParallelism(4);
 		System.out.println(env.getExecutionPlan());
-		env.execute("kafka message save to mysql");
+		env.execute("lft stream report");
 	}
 }

@@ -46,15 +46,15 @@ ALTER TABLE `forder_aggregation` ADD INDEX contract_update_time (`order_contract
 ALTER TABLE `forder_aggregation` ADD INDEX reddemhouse_update_time (`order_reddemhouse_update_time`);
 
 
-CREATE TABLE IF NOT EXISTS `api_service.lft_report`(
+CREATE TABLE IF NOT EXISTS api_service.lft_report(
    `id` INT UNSIGNED AUTO_INCREMENT,
-   `all_amt` DOUBLE,
-   `all_amt_today` DOUBLE,
-   `other_amt` DOUBLE,
-   `sub_acc_amt` DOUBLE,
-   `agent_amt` DOUBLE,
-   `agreement_amt` DOUBLE,
+   `all_amt` double(16,2),
+   `all_amt_today` double(16,2),
+   `other_amt` double(16,2),
+   `sub_acc_amt` double(16,2),
+   `agent_amt` double(16,2),
+   `agreement_amt` double(16,2),
    `data_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
    PRIMARY KEY ( `id` )
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-insert into api_service.lft_report(all_amt,all_amt_today,other_amt,sub_acc_amt,agent_amt,agreement_amt) values(0,0,0,0,0,0,);
+insert into api_service.lft_report(all_amt,all_amt_today,other_amt,sub_acc_amt,agent_amt,agreement_amt) values(0,0,0,0,0,0);
