@@ -1,5 +1,9 @@
 package com.bkjf.flink_example;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -13,7 +17,10 @@ import com.bkjf.flink_example.bean.KafkaBinLogEvent;
  *
  */
 public class App {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
+		Calendar cal = Calendar.getInstance();
+		int year = cal.get(Calendar.YEAR);
+		System.out.println("year = "+year);
 		/*String str = "{\"data\":{\"before\":{},\"after\":{\"password\":\"22222222222\",\"cust_id\":\"3\",\"username\":\"1111111\"}},\"dbName\":\"testdb\",\"id\":13,\"operType\":\"INSERT\",\"tableName\":\"test\"}";
 		JSONObject obj = (JSONObject) JSON.parse(str);
 		System.out.println(obj);
@@ -32,9 +39,21 @@ public class App {
 		String sqlType = "replace into report.xfl";
 		String sql = getSqlStr(sqlType, bean.getData().getAfter());
 		System.out.println(sql);*/
+		SimpleDateFormat df =  new SimpleDateFormat("yyyy-MM-dd");
+		Date parse = df.parse("2018-12-10 16:18:20");
+		System.out.println("-----> "+df.format(parse));
+		long time1 = new SimpleDateFormat("yyyy-MM-dd").parse("2018-12-10 16:18:20").getTime();
+		long time2 = System.currentTimeMillis();
+		String str = "2018-12-10 16:18:20";
+		System.out.println("======>"+str.split(" ")[0].replaceAll("-", ""));
+		/*
 		String str = "15450.0";
 		double all_amt = StringUtils.isEmpty(str) ? 0 : Double.valueOf(str);
-		System.out.println(all_amt);
+		System.out.println(all_amt);*/
+		System.out.println(time1);
+		System.out.println(time2);
+		String currentTime = new SimpleDateFormat("yyyyMMdd").format(new Date(System.currentTimeMillis()));
+		System.out.println("======>"+currentTime);
 	}
 	
 	
