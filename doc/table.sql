@@ -58,3 +58,11 @@ CREATE TABLE IF NOT EXISTS api_service.lft_report(
    PRIMARY KEY ( `id` )
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 insert into api_service.lft_report(all_amt,all_amt_today,other_amt,sub_acc_amt,agent_amt,agreement_amt) values(0,0,0,0,0,0);
+
+
+
+CREATE TABLE IF NOT EXISTS api_service.lft_report_real_all_user_cnt(
+id bigint auto_increment primary key,
+etl_time  datetime comment '数据时间',
+user_count bigint comment '总登录人数'
+);

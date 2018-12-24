@@ -13,157 +13,56 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
-  
-  <profiles>
-		<profile>
-			<id>dev</id>
-			<properties>
-				<apps.directory>/home/fanglin/jarFile/</apps.directory>
-				<resource.dir>env/dev</resource.dir>
-			</properties>
-		</profile>
-		<profile>
-			<id>test</id>
-			<properties>
-				<apps.directory>/home/datainfra/project/flimk-example/</apps.directory>
-				<resource.dir>env/test</resource.dir>
-			</properties>
-		</profile>
-		<profile>
-			<id>pro</id>
-			<properties>
-				<apps.directory>/data/apps/flink</apps.directory>
-				<resource.dir>env/pro</resource.dir>
-			</properties>
-		</profile>
-		
-	</profiles>
 
-  <dependencies>
-  	<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-	<dependency>
-	    <groupId>mysql</groupId>
-	    <artifactId>mysql-connector-java</artifactId>
-	    <version>5.1.47</version>
-	</dependency>
-  	
-  	<!-- https://mvnrepository.com/artifact/org.apache.flink/flink-connector-kafka-0.11 -->
-	<dependency>
-	    <groupId>org.apache.flink</groupId>
-	    <artifactId>flink-connector-kafka-0.11_2.11</artifactId>
-	    <version>1.6.0</version>
-	</dependency>
-  	<!-- https://mvnrepository.com/artifact/org.apache.flink/flink-core -->
-	<dependency>
-	    <groupId>org.apache.flink</groupId>
-	    <artifactId>flink-core</artifactId>
-	    <version>1.6.0</version>
-	</dependency>
-	<!-- https://mvnrepository.com/artifact/org.apache.flink/flink-java -->
-	<dependency>
-	    <groupId>org.apache.flink</groupId>
-	    <artifactId>flink-java</artifactId>
-	    <version>1.6.0</version>
-	</dependency>
-	
-  	<!-- https://mvnrepository.com/artifact/org.apache.flink/flink-streaming-java -->
-	<dependency>
-	    <groupId>org.apache.flink</groupId>
-	    <artifactId>flink-streaming-java_2.11</artifactId>
-	    <version>1.6.0</version>
-	</dependency>
-  	<!-- https://mvnrepository.com/artifact/org.apache.flink/flink-runtime -->
-	<dependency>
-	    <groupId>org.apache.flink</groupId>
-	    <artifactId>flink-runtime_2.11</artifactId>
-	    <version>1.6.0</version>
-	</dependency>
-	<!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
-	<dependency>
-	    <groupId>com.alibaba</groupId>
-	    <artifactId>fastjson</artifactId>
-	    <version>1.2.50</version>
-	</dependency>
-	
-  
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-  
-  <build>
-  	 <resources>
-			<resource>
-				<directory>${resource.dir}</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
-			<resource>
-				<directory>src/main/java</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
-		</resources>
- 	 <plugins>
- 	 		<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.3</version>
-				<configuration>
-					<appendAssemblyId>false</appendAssemblyId>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-					<archive>
-						<manifest>
-							<mainClass>com.bkjf.flink_example.kafka.FlinkKafkaToMysqlDemo</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
-						<goals>
-							<goal>assembly</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>  
-                <artifactId>maven-antrun-plugin</artifactId>  
-                <executions>  
-                    <execution>  
-                        <phase>package</phase>  
-                        <configuration>  
-                            <tasks>  
-                                <copy todir="${apps.directory}">  
-                                    <fileset dir="target/">  
-                                        <include name="*.jar" />  
-                                    </fileset>  
-                                </copy>  
-                            </tasks>  
-                        </configuration>  
-                        <goals>  
-                            <goal>run</goal>  
-                        </goals>  
-                    </execution>  
-                </executions>  
-            </plugin>  
-        </plugins>
-		<finalName>flink-kafka</finalName>
-</build>
+	<dependencies>
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.47</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.flink/flink-connector-kafka-0.11 -->
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-connector-kafka-0.11_2.11</artifactId>
+			<version>1.6.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.flink/flink-core -->
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-core</artifactId>
+			<version>1.6.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.flink/flink-java -->
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-java</artifactId>
+			<version>1.6.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.flink/flink-streaming-java -->
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-streaming-java_2.11</artifactId>
+			<version>1.6.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.flink/flink-runtime -->
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-runtime_2.11</artifactId>
+			<version>1.6.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.50</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 </project>
